@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bootstrap form</title>
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+  <h1>Personal Information</h1>
+
+  <form action="https://cors-anywhere.herokuapp.com/https://mate-academy-form-lesson.herokuapp.com/create-application"
+        method="post"
+        id="form">
+
+    <fieldset>
+      <legend>Personal Information</legend>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label" for="surname"> Surname:</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text" id="surname" name="surname" autocomplete="off" required>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label" for="name"> Name: </label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text" id="name" name="name" value="Dmitry">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label" for="age">How old are You?:</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="number" id="age" name="age">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label" for="full-date">Full date of birth:</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="date" id="full-date" name="full-date">
+        </div>
+      </div>
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="agreement" name="agreement">
+        <label class="form-check-label" for="agreement">I accept the terms of the agreement</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Registration</legend>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label" for="email">E-mail</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="email" id="email" name="email">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label" for="password">Password</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="password" id="password" name="password" minlength="6" maxlength="16">
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>An interesting fact about you!</legend>
+      <p>Do you love cats?</p>
+      <div class="form-group">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" value="yes" id="yes" name="love-cats-vote">
+          <label class="form-check-label" for="yes">Yes</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" value="no" id="no" name="love-cats-vote">
+          <label class="form-check-label" for="no">No</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-form-label" for="fav-color">What is your favorite color?</label>
+        <input class="form-control col-sm-1" type="color" name="color" id="fav-color">
+      </div>
+      <div class="form-group">
+        <label class="col-form-label" for="time-go-bed">What time do you go to bed?</label>
+        <input class="form-control col-sm-1" type="time" id="time-go-bed" name="time-go-bed">
+      </div>
+      <div class="form-group">
+        <label class="col-form-label" for="brand">What your favorite brand of cars?</label>
+        <select class="form-control col-sm-1" name="brand" id="brand" size="4">
+          <option value="bmw">BMW</option>
+          <option value="audi">Audi</option>
+          <option value="lada">Lada</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="col-form-label" for="rate">How do you rate our work?</label>
+        <input class="form-control col-sm-1" name="rate" id="rate" type="range" min="0" max="100" value="50" step="10">
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Your comments:</legend>
+      <textarea class="form-control col-sm-4" name="comments" id="comments" cols="30" rows="3"
+                placeholder="Comments"></textarea>
+    </fieldset>
+
+    <input class="btn" type="submit" value="Submit">
+
+  </form>
+</div>
+
+<script>
+  if (document.forms[0] && window.FormData) {
+
+    const message = {};
+    message.loading = 'Загрузка...';
+    message.failure = 'Ээххх! Что-то пошло не так...';
+
+    const form = document.forms[0];
+
+    const statusMessage = document.createElement('div');
+    statusMessage.className = 'status';
+
+    const urlencodeFormData = (fd) => {
+      let s = '';
+      const encode = (s) => {
+        return encodeURIComponent(s).replace(/%20/g,'+');
+      };
+      for(let pair of fd.entries()) {
+        if(typeof pair[1] === 'string') {
+          s += (s ? '&' : '') + encode(pair[0]) + '=' + encode(pair[1])
+        }
+      }
+      return s;
+    };
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      form.appendChild(statusMessage);
+
+      const formData = new FormData(form);
+
+      const request = new XMLHttpRequest();
+      request.open(document.getElementById("form").method, document.getElementById("form").action, true);
+      request.setRequestHeader('accept', 'application/json');
+      request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+      request.send(urlencodeFormData(formData));
+      request.onreadystatechange = () => {
+        if (request.readyState < 4)
+          statusMessage.innerHTML = message.loading;
+        else if (request.readyState === 4) {
+          if (request.status === 200 && request.status < 300)
+            statusMessage.innerHTML = request.responseText;
+          else
+            form.insertAdjacentHTML('beforeend', message.failure);
+        }
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
