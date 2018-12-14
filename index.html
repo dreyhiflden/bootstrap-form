@@ -80,15 +80,15 @@
       </div>
       <div class="form-group">
         <label class="col-form-label" for="fav-color">What is your favorite color?</label>
-        <input class="form-control col-sm-1" type="color" name="color" id="fav-color">
+        <input class="form-control col-md-1" type="color" name="color" id="fav-color">
       </div>
       <div class="form-group">
         <label class="col-form-label" for="time-go-bed">What time do you go to bed?</label>
-        <input class="form-control col-sm-1" type="time" id="time-go-bed" name="time-go-bed">
+        <input class="form-control col-md-1" type="time" id="time-go-bed" name="time-go-bed">
       </div>
       <div class="form-group">
         <label class="col-form-label" for="brand">What your favorite brand of cars?</label>
-        <select class="form-control col-sm-1" name="brand" id="brand" size="4">
+        <select class="form-control col-md-1" name="brand" id="brand" size="4">
           <option value="bmw">BMW</option>
           <option value="audi">Audi</option>
           <option value="lada">Lada</option>
@@ -96,17 +96,24 @@
       </div>
       <div class="form-group">
         <label class="col-form-label" for="rate">How do you rate our work?</label>
-        <input class="form-control col-sm-1" name="rate" id="rate" type="range" min="0" max="100" value="50" step="10">
+        <input class="form-control col-md-1" name="rate" id="rate" type="range" min="0" max="100" value="50" step="10">
       </div>
     </fieldset>
 
-    <fieldset>
+    <fieldset class="form-group">
       <legend>Your comments:</legend>
-      <textarea class="form-control col-sm-4" name="comments" id="comments" cols="30" rows="3"
-                placeholder="Comments"></textarea>
+      <textarea class="form-control col-md-4" name="comments" id="comments" cols="30" rows="3"
+              placeholder="Comments"></textarea>
     </fieldset>
 
-    <input class="btn" type="submit" value="Submit">
+    <div class="form-group row">
+      <div class="col-md-3 mb-3">
+        <input class="btn btn-primary btn-block" type="submit" value="Submit">
+      </div>
+      <div class="col-md-3 mb-3">
+        <input class="btn btn-secondary btn-block" type="reset" value="Reset">
+      </div>
+    </div>
 
   </form>
 </div>
